@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  web-backend:
+    build: ./web-backend 
+    container_name: web-backend
+    ports:
+      - "8001:8000" # FOR localhost 8001
+    networks:
+      - titanic-net
+
+  model-backend:
+    build: ./model-backend
+    container_name: model-backend
+    ports:
+      - "8002:8000" # for localhost 8002
+    networks:
+      - titanic-net
+
+  # PLACEHOLDER FOR FRONTEND
+
+networks:
+  titanic-net:
+    driver: bridge
