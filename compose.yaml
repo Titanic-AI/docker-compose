@@ -17,7 +17,13 @@ services:
     networks:
       - titanic-net
 
-  # PLACEHOLDER FOR FRONTEND
+  web-frontend:
+    build: ./web-backend
+    container_name: web-backend
+    ports:
+      - "8003:8000" # for localhost 8002
+    networks:
+      - titanic-net
 
 networks:
   titanic-net:
