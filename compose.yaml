@@ -1,29 +1,46 @@
 version: "3.9"
 
 services:
+  db:
+    # image: postgres:16
+    #container_name: db
+    #restart: always
+    #environment:
+      #POSTGRES_USER: youruser
+      #POSTGRES_PASSWORD: yourpassword
+      #POSTGRES_DB: yourdb
+    #volumes:
+    #  - db_data:/var/lib/postgresql/data
+    networks:
+      - titanic-net
+
   web-backend:
-    build: ./web-backend 
+    build: ./web-backend
     container_name: web-backend
-    ports:
-      - "8001:8000" # FOR localhost 8001
+    depends_on:
+      - db
+      - model-backend
     networks:
       - titanic-net
 
   model-backend:
     build: ./model-backend
     container_name: model-backend
-    ports:
-      - "8002:8000" # for localhost 8002
     networks:
       - titanic-net
 
   web-frontend:
-    build: ./web-backend
-    container_name: web-backend
+    build: ./web-frontend
+    container_name: web-frontend
     ports:
-      - "8003:8000" # for localhost 8002
+      - "8080:80" # frontend to localhost:8080
+    depends_on:
+      - web-backend
     networks:
       - titanic-net
+
+volumes:
+  db_data:
 
 networks:
   titanic-net:
