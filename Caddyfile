@@ -1,0 +1,12 @@
+http:// {
+    root * /srv/frontend
+    file_server
+
+    handle_path /api/* {
+        reverse_proxy web-backend:8000
+    }
+
+    handle_path /model-api/* {
+        reverse_proxy model-backend:8000
+    }
+}
