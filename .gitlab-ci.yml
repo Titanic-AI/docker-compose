@@ -16,7 +16,7 @@ build-frontend:
     - npm run build
   artifacts:
     paths:
-      - web-frontend/vite-project/dist/
+      - web-frontend/vite-project/
 
 build-backend:
   stage: build
