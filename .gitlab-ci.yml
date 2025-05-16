@@ -18,7 +18,7 @@ build-frontend:
     - npm run build
   artifacts:
     paths:
-      - web-frontend/vite-project/dist/
+      - web-frontend/vite-project/
 
 # -----------------------------
 # BACKEND & MODEL DOCKER BUILD
