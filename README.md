@@ -12,9 +12,12 @@
 
 # commands for submodule updates
 
-git submodule update --init --recursive
-git commit -am "Update submodules to latest commits"
-git push
+cd docker-compose
+git submodule update --remote --merge
+git status
+git add web-backend model-backend web-frontend
+git commit -m "Update submodule pointers to latest commits"
+git push origin jamal-dc
 
 
 # student-repo
