@@ -5,26 +5,28 @@ services:
     image: postgres:16
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: titanic
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: Titanic_Databases
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
       - titanic-net
-
 
   web-backend:
     build: ./web-backend
     container_name: web-backend
     depends_on:
       - db
-      - model-backend
     networks:
       - titanic-net
 
   model-backend:
     build: ./model-backend
     container_name: model-backend
+    depends_on:
+      - db
+    volumes:
+      - model_data:/app/Models
     networks:
       - titanic-net
 
@@ -55,6 +57,7 @@ volumes:
   db_data:
   caddy_data:
   caddy_config:
+  model_data:
 
 networks:
   titanic-net:
