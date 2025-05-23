@@ -1,0 +1,18 @@
+:80
+
+# Serve the React frontend
+root * /srv/frontend
+file_server
+
+# React Router fallback
+try_files {path} /index.html
+
+# Reverse proxy to web-backend
+handle_path /api/* {
+    reverse_proxy web-backend:8000
+}
+
+# Reverse proxy to model-backend
+handle_path /predict/* {
+    reverse_proxy model-backend:8000
+}
