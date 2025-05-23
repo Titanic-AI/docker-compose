@@ -39,13 +39,15 @@ services:
       - titanic-net
 
   caddy:
-    image: caddy:2
+    build:
+      context: ./web-frontend/vite-project
+      dockerfile: Dockerfile
+    image: titanic-frontend
     container_name: caddy
     ports:
       - "8080:80"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
-      - ./web-frontend/vite-project/dist:/srv/frontend
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
@@ -57,9 +59,9 @@ services:
 
 volumes:
   db_data:
+  model_data:
   caddy_data:
   caddy_config:
-  model_data:
 
 networks:
   titanic-net:
