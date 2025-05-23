@@ -1,79 +1,52 @@
 stages:
   - build
   - test
-  - deploy
-
-variables:
-  DOCKER_DRIVER: overlay2
-  DOCKER_TLS_CERTDIR: ""
 
 # -----------------------------
-# FRONTEND BUILD (VITE)
+# FRONTEND BUILD + TEST
 # -----------------------------
 build-frontend:
   stage: build
   image: node:20
   script:
     - cd web-frontend/vite-project
-    - npm ci || npm install
+    - npm ci
     - npm run build
   artifacts:
     paths:
       - web-frontend/vite-project/dist
 
+test-frontend:
+  stage: test
+  image: node:20
+  script:
+    - cd web-frontend/vite-project
+    - npm ci
+    - npm run lint         
+    - npm run build        
+
 # -----------------------------
-# BACKEND & MODEL DOCKER BUILD
+# WEB-BACKEND DOCKER BUILD
 # -----------------------------
-build-backend:
+build-web-backend:
   stage: build
   image: docker:20
   services:
     - docker:dind
-  script:
+  before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-    - docker build -t $CI_REGISTRY_IMAGE/web-backend ./web-backend
-    - docker build -t $CI_REGISTRY_IMAGE/model-backend ./model-backend
-    - docker push $CI_REGISTRY_IMAGE/web-backend
-    - docker push $CI_REGISTRY_IMAGE/model-backend
+  script:
+    - docker build -t "$CI_REGISTRY_IMAGE/web-backend:latest" ./web-backend
+    - docker push "$CI_REGISTRY_IMAGE/web-backend:latest"
 
 # -----------------------------
-# UNIT + INTEGRATION TESTS
+# WEB-BACKEND PYTEST
 # -----------------------------
-unit-tests:
+test-web-backend:
   stage: test
   image: python:3.11
   before_script:
-    - pip install -r model-backend/requirements.txt || true
-    - pip install -r web-backend/requirements.txt || true
+    - pip install -r web-backend/requirements.txt
     - pip install pytest
   script:
-    - pytest model-backend || true
-    - pytest web-backend || true
-
-# -----------------------------
-# E2E TESTS (SCHEDULED NIGHTLY)
-# -----------------------------
-e2e-tests:
-  stage: test
-  image: cypress/included:12.17.4
-  script:
-    - cd web-frontend/vite-project
-    - npm ci || npm install
-    - npm run build
-    - npx cypress run
-  only:
-    - schedules
-
-# -----------------------------
-# DEPLOY (LOCALHOST DEMO)
-# -----------------------------
-deploy-job:
-  stage: deploy
-  image: docker:20
-  services:
-    - docker:dind
-  script:
-    - docker compose -f docker-compose/compose.yaml up -d --build
-  environment:
-    name: staging
-    url: http://localhost:8080
+    - pytest web-backend
