@@ -9,6 +9,9 @@
 
 [Web Frontend](https://mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/7up/web-frontend)
 
+# Requirements for Docker Compose
+- The compose specification shall be managed in the docker-compose repository.
+- All other required repositories are included in this repository via git submodules
 
 # commands for submodule updates
 
