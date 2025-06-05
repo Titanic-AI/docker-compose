@@ -8,4 +8,4 @@
 [submodule "model-backend"]
 	path = model-backend
 	url = https://mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/7up/model-backend
-	branch = DockerFileCreation
+
