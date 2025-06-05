@@ -1,9 +1,6 @@
 [submodule "web-backend"]
 	path = web-backend
 	url = https://mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/7up/web-backend
-[submodule "model-backend"]
-	path = model-backend
-	url = https://mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/7up/model-backend/-/tree/DockerFileCreation?ref_type=heads
 [submodule "web-frontend"]
 	path = web-frontend
 	url = https://mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/7up/web-frontend
