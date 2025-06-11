@@ -32,7 +32,7 @@ services:
     expose:
       - "8000"
     ports:
-      - "8001:8000"
+      - "8000:8000"
     networks:
       - titanic-net
 
