@@ -16,7 +16,7 @@ services:
     build: ./web-backend
     container_name: web-backend
     ports:
-      - "8000:8000"
+      - "8001:8000"
     depends_on:
       - db
     networks:
@@ -31,8 +31,8 @@ services:
       - model_data:/app/Models
     expose:
       - "8000"
-    ports:
-      - "8000:8000"
+    #ports:
+     # - "8000:8000"
     networks:
       - titanic-net
 
