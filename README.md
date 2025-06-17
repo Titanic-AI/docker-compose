@@ -24,11 +24,10 @@ git commit -m "Update submodule pointers to latest commits"
 git push origin jamal-dc
 ```
 
-# running docker + caddy + Frontend
+# running docker + Frontend + web-backend (working)
 
 ```bash
-docker-compose build caddy
-docker-compose up -d
+docker-compose up  --build
 website:  http://localhost:8080
 ```
 # -----------------------------------------------------------------------------------------------
