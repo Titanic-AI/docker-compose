@@ -28,15 +28,21 @@ git push origin jamal-dc
 
 ```bash
 docker-compose up  --build
-website:  http://localhost:8080
+frontend:  http://localhost:8080
 ```
 # -----------------------------------------------------------------------------------------------
 
-# docker + web-backend + swagger after running caddy
-# swagger 
-
+# docker + model-backend + swagger
 ```bash
-http://127.0.0.1:8000/docs
+http://127.0.0.1:8002/docs
+```
+
+# -----------------------------------------------------------------------------------------------
+
+# docker + web-backend + swagger
+# swagger 
+```bash
+http://127.0.0.1:8001/docs
 ```
 # access database
 ```bash
