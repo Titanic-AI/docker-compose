@@ -24,16 +24,15 @@ services:
       - titanic-net
 
   model-backend:
-    build: ./model-backend
-    container_name: model-backend
-    depends_on:
-      - db
-    volumes:
-      - model_data:/app/Models
-    expose:
-      - "8000"
-    networks:
-      - titanic-net
+      build: ./model-backend
+      ports:
+        - "8002:8000"
+      depends_on:
+        - db
+      volumes:
+        - ./model-backend/Models:/app/Models
+      networks:
+        - titanic-net
 
   web-frontend:
     build: ./web-frontend/vite-project
