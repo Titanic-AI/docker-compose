@@ -19,45 +19,48 @@ services:
       - "8001:8000"
     depends_on:
       - db
+    environment:
+      - Database_URL=postgresql://postgres:1234@db:5432/Titanic_Databases
     entrypoint: ["sh", "-c", "sleep 10 && uvicorn main:app --host 0.0.0.0 --port 8000"]
     networks:
       - titanic-net
 
-  model-backend:
-      build: ./model-backend
-      ports:
-        - "8002:8000"
-      depends_on:
-        - db
-      volumes:
-        - ./model-backend/Models:/app/Models
-      networks:
-        - titanic-net
-
+  # model-backend:
+  #   build:
+  #     context: ./model-backend
+  #   networks:
+  #     - internal
+  #   volumes:
+  #     - model-data:/app/Models
   web-frontend:
-    build: ./web-frontend/vite-project
-    container_name: web-frontend
-    networks:
-      - titanic-net
-
-  caddy:
     build:
       context: ./web-frontend/vite-project
-      dockerfile: Dockerfile
-    image: titanic-frontend
-    container_name: caddy
+      dockerfile: Dockerfile.dev
     ports:
-      - "8080:80"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
-    depends_on:
-      - web-frontend
-      - web-backend
-      - model-backend
+      - "5173:5173"
     networks:
       - titanic-net
+    depends_on:
+      - web-backend
+
+  # caddy:
+  #   build:
+  #     context: ./web-frontend/vite-project
+  #     dockerfile: Dockerfile
+  #   image: titanic-frontend
+  #   container_name: caddy
+  #   ports:
+  #     - "8080:80"
+  #   volumes:
+  #     - ./Caddyfile:/etc/caddy/Caddyfile
+  #     - caddy_data:/data
+  #     - caddy_config:/config
+  #   depends_on:
+  #     - web-frontend
+  #     - web-backend
+  #     - model-backend
+  #   networks:
+  #     - titanic-net
 
 volumes:
   db_data:

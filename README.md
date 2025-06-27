@@ -17,7 +17,7 @@
 
 ```bash
 cd docker-compose
-git submodule update --remote --merge
+git submodule update --remote --merge --init
 git status
 git add web-backend model-backend web-frontend
 git commit -m "Update submodule pointers to latest commits"

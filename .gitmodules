@@ -6,9 +6,10 @@
 [submodule "web-backend"]
 	path = web-backend
 	url = https://mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/7up/web-backend.git
-	branch = main
+	branch = Testing-wb
 
 [submodule "web-frontend"]
 	path = web-frontend
 	url = https://mygit.th-deg.de/schober-teaching/student-projects/ain-23-software-engineering/ss-25/7up/web-frontend.git
-	branch = main
+	branch = Web-Frontend-Bug-fix
+
