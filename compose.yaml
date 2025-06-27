@@ -25,42 +25,43 @@ services:
     networks:
       - titanic-net
 
-  # model-backend:
-  #   build:
-  #     context: ./model-backend
-  #   networks:
-  #     - internal
-  #   volumes:
-  #     - model-data:/app/Models
+  model-backend:
+    build:
+      context: ./model-backend
+    networks:
+      - titanic-net
+    volumes:
+      - model_data:/app/Models
+
   web-frontend:
     build:
       context: ./web-frontend/vite-project
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
-      - "5173:5173"
+      - "8080"
     networks:
       - titanic-net
     depends_on:
       - web-backend
 
-  # caddy:
-  #   build:
-  #     context: ./web-frontend/vite-project
-  #     dockerfile: Dockerfile
-  #   image: titanic-frontend
-  #   container_name: caddy
-  #   ports:
-  #     - "8080:80"
-  #   volumes:
-  #     - ./Caddyfile:/etc/caddy/Caddyfile
-  #     - caddy_data:/data
-  #     - caddy_config:/config
-  #   depends_on:
-  #     - web-frontend
-  #     - web-backend
-  #     - model-backend
-  #   networks:
-  #     - titanic-net
+  caddy:
+    build:
+      context: ./web-frontend/vite-project      
+      dockerfile: Dockerfile
+    image: titanic-frontend
+    container_name: caddy
+    ports:
+      - "8080:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile      
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web-frontend
+      - web-backend
+      - model-backend
+    networks:
+      - titanic-net
 
 volumes:
   db_data:

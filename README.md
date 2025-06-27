@@ -56,3 +56,5 @@ docker exec -it docker-compose-db-1 psql -U postgres -d Titanic_Databases
 ```bash
 SELECT * FROM "Registered_User";
 ```
+
+admin@titanic.com
