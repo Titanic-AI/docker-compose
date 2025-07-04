@@ -1,7 +1,21 @@
-:80 {
+:80
+
+# 1) API & Auth endpoints → FastAPI
+handle /api/* {
+  reverse_proxy web-backend:8000
+}
+handle /auth/* {
+  reverse_proxy web-backend:8000
+}
+
+# 2) Model endpoints → model-backend
+handle /predict/* {
+  reverse_proxy model-backend:8000
+}
+
+# 3) Everything else → React static files + SPA fallback
+handle {
   root * /srv/frontend
   file_server
-
-  reverse_proxy /auth/* web-backend:8000
-  reverse_proxy /api/* model-backend:8000
+  try_files {path} /index.html
 }

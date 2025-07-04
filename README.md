@@ -17,7 +17,7 @@
 
 ```bash
 cd docker-compose
-git submodule update --remote --merge
+git submodule update --remote --merge --init
 git status
 git add web-backend model-backend web-frontend
 git commit -m "Update submodule pointers to latest commits"
@@ -56,3 +56,5 @@ docker exec -it docker-compose-db-1 psql -U postgres -d Titanic_Databases
 ```bash
 SELECT * FROM "Registered_User";
 ```
+
+admin@titanic.com
