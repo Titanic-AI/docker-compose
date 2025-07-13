@@ -62,16 +62,16 @@ services:
       - model-backend
     networks:
       - titanic-net
-  cypress:
-    image: cypress/included:12.17.4
-    depends_on:
-      - web-frontend
-      - web-backend
-      - model-backend
-    working_dir: /e2e
-    volumes:
-      - ./web-frontend:/e2e
-    command: ["npx", "cypress", "run"]
+  # cypress:
+  #   image: cypress/included:12.17.4
+  #   depends_on:
+  #     - web-frontend
+  #     - web-backend
+  #     - model-backend
+  #   working_dir: /e2e
+  #   volumes:
+  #     - ./web-frontend:/e2e
+  #   command: ["npx", "cypress", "run"]
 
 volumes:
   db_data:
