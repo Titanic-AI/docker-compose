@@ -105,7 +105,6 @@ For additional variables, see the `.env.example` files in each sub‑project.
 
 ## 7. CI/CD Pipeline
 
-> **Pipeline stages:** *lint → test → build & push → e2e → release*
 
 * **GitLab CI** definitions live alongside each sub‑project (monorepo‑friendly).
 * Images are pushed to the **GitLab Container Registry** under your team group.
