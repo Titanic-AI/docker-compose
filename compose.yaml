@@ -51,7 +51,7 @@ services:
     image: titanic-frontend
     container_name: caddy
     ports:
-      - "8080:80"
+      - "8081:80"
     volumes:
       # - ./Caddyfile:/etc/caddy/Caddyfile      
       - caddy_data:/data
