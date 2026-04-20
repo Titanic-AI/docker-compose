@@ -49,12 +49,34 @@ services:
     container_name: caddy
     ports:
       - "8081:80"
-    configs:
-      - source: my_caddyfile
-        target: /etc/caddy/Caddyfile
+    # This replaces the need for a separate Caddyfile
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        cat <<EOF > /etc/caddy/Caddyfile
+        :80
+        handle /api/* {
+            reverse_proxy web-backend:8000
+        }
+        handle /auth/* {
+            reverse_proxy web-backend:8000
+        }
+        handle /predict/* {
+            reverse_proxy model-backend:8000
+        }
+        handle {
+            root * /srv/frontend
+            file_server
+            try_files {path} /index.html
+        }
+        EOF
+        caddy run --config /etc/caddy/Caddyfile
     volumes:
       - caddy_data:/data
       - caddy_config:/config
+      # Only mount the dist folder, which Caddy needs to serve the site
+      - ./web-frontend/vite-project/dist:/srv/frontend:ro
     depends_on:
       - web-frontend
       - web-backend
