@@ -44,16 +44,14 @@ services:
     depends_on:
       - web-backend
 
-  caddy:
-    build:
-      context: ./web-frontend/vite-project      
-      dockerfile: Dockerfile
-    image: titanic-frontend
+  ccaddy:
+    image: caddy:2-alpine
     container_name: caddy
     ports:
       - "8081:80"
     volumes:
-      # - ./Caddyfile:/etc/caddy/Caddyfile      
+      # Use the absolute path where Coolify clones your repo
+      - /data/coolify/applications/cna1gunhxynqdctzg1pa5mmu/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
