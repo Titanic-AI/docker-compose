@@ -44,14 +44,15 @@ services:
     depends_on:
       - web-backend
 
-  ccaddy:
+  caddy:
     image: caddy:2-alpine
     container_name: caddy
     ports:
       - "8081:80"
+    configs:
+      - source: my_caddyfile
+        target: /etc/caddy/Caddyfile
     volumes:
-      # Use the absolute path where Coolify clones your repo
-      - /data/coolify/applications/cna1gunhxynqdctzg1pa5mmu/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
@@ -60,6 +61,10 @@ services:
       - model-backend
     networks:
       - titanic-net
+
+configs:
+  my_caddyfile:
+    file: ./Caddyfile  # Points to the Caddyfile in your repo root
   # cypress:
   #   image: cypress/included:12.17.4
   #   depends_on:
