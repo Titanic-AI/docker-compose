@@ -25,32 +25,23 @@ services:
     build:
       context: ./model-backend
     expose:
-      - "8000" # Explicitly exposing port 8000 so Caddy can find the target route
+      - "8000"
     volumes:
       - model_data:/app/Models
 
-  web-frontend:
+  # Combined Frontend & Proxy Service
+  caddy-frontend:
     build:
-      context: ./web-frontend/vite-project
+      context: ./web-frontend/vite-project      
       dockerfile: Dockerfile
-    expose:
-      - "8080"
-    depends_on:
-      - web-backend
-
-  caddy:
-    build:
-      context: .     # Change this from ./web-frontend/vite-project to .
-      dockerfile: ./web-frontend/vite-project/Dockerfile # Point explicitly to the file
     image: titanic-frontend
-    container_name: caddy
+    container_name: caddy-frontend
     expose:
       - "8081"
     volumes:
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
-      - web-frontend
       - web-backend
       - model-backend
 
