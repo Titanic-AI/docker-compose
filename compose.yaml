@@ -40,12 +40,12 @@ services:
 
   caddy:
     build:
-      context: ./web-frontend/vite-project      
-      dockerfile: Dockerfile
+      context: .     # Change this from ./web-frontend/vite-project to .
+      dockerfile: ./web-frontend/vite-project/Dockerfile # Point explicitly to the file
     image: titanic-frontend
     container_name: caddy
     expose:
-      - "8081" # Expose the internal port directly to Coolify's outer proxy layer
+      - "8081"
     volumes:
       - caddy_data:/data
       - caddy_config:/config
