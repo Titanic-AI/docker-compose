@@ -1,21 +1,21 @@
-https://titanic-ai.m-ahtisham-bhatti.com/
+:80 {
+    # 1) API & Auth endpoints → FastAPI (Internal port is 8000)
+    handle /api/* {
+        reverse_proxy web-backend:8000
+    }
+    handle /auth/* {
+        reverse_proxy web-backend:8000
+    }
 
-# 1) API & Auth endpoints → FastAPI
-handle /api/* {
-  reverse_proxy web-backend:8000
-}
-handle /auth/* {
-  reverse_proxy web-backend:8000
-}
+    # 2) Model endpoints → model-backend (Change from 8000 to match your model's code port, e.g., 5000)
+    handle /predict/* {
+        reverse_proxy model-backend:5000 
+    }
 
-# 2) Model endpoints → model-backend
-handle /predict/* {
-  reverse_proxy model-backend:8000
-}
-
-# 3) Everything else → React static files + SPA fallback
-handle {
-  root * /srv/frontend
-  file_server
-  try_files {path} /index.html
+    # 3) Everything else → React static files + SPA fallback
+    handle {
+        root * /srv/frontend
+        file_server
+        try_files {path} /index.html
+    }
 }
