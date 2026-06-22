@@ -1,4 +1,4 @@
-:80
+https://titanic-ai.m-ahtisham-bhatti.com/
 
 # 1) API & Auth endpoints → FastAPI
 handle /api/* {
